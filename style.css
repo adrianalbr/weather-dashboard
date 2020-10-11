@@ -6,3 +6,8 @@
 .show {
     display: block;
 }
+
+#forecast{
+
+    float: right;
+}

@@ -1,7 +1,7 @@
 // store the value of the input
 let city = $("#searchTerm").val();
 // store api key
-const apiKey = "e7004d59aaee9d2c35310a5585c843a1";
+var apiKey = "e7004d59aaee9d2c35310a5585c843a1";
 
 let date = new Date();
 
@@ -64,22 +64,22 @@ function getCurrentConditions(response) {
   $("#currentCity").empty();
 
   // get and set the content
-  const card = $("<div>").addClass("card");
-  const cardBody = $("<div>").addClass("card-body");
-  const city = $("<h4>").addClass("card-title").text(response.name);
-  const cityDate = $("<h4>")
+  var card = $("<div>").addClass("card");
+  var cardBody = $("<div>").addClass("card-body");
+  var city = $("<h4>").addClass("card-title").text(response.name);
+  var cityDate = $("<h4>")
     .addClass("card-title")
     .text(date.toLocaleDateString("en-US"));
-  const temperature = $("<p>")
+  var temperature = $("<p>")
     .addClass("card-text current-temp")
     .text("Temperature: " + tempF + " °F");
-  const humidity = $("<p>")
+  var humidity = $("<p>")
     .addClass("card-text current-humidity")
     .text("Humidity: " + response.main.humidity + "%");
-  const wind = $("<p>")
+  var wind = $("<p>")
     .addClass("card-text current-wind")
     .text("Wind Speed: " + response.wind.speed + " MPH");
-  const image = $("<img>").attr(
+  var image = $("<img>").attr(
     "src",
     "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png"
   );
@@ -119,21 +119,21 @@ function getCurrentForecast() {
         let temp = (results[i].main.temp - 273.15) * 1.8 + 32;
         let tempF = Math.floor(temp);
 
-        const card = $("<div>").addClass(
+        var card = $("<div>").addClass(
           "card col-md-2 ml-4 bg-primary text-white"
         );
-        const cardBody = $("<div>").addClass("card-body p-3 forecastBody");
-        const cityDate = $("<h4>")
+        var cardBody = $("<div>").addClass("card-body p-3 forecastBody");
+        var cityDate = $("<h4>")
           .addClass("card-title")
           .text(date.toLocaleDateString("en-US"));
-        const temperature = $("<p>")
+        var temperature = $("<p>")
           .addClass("card-text forecastTemp")
           .text("Temperature: " + tempF + " °F");
-        const humidity = $("<p>")
+        var humidity = $("<p>")
           .addClass("card-text forecastHumidity")
           .text("Humidity: " + results[i].main.humidity + "%");
 
-        const image = $("<img>").attr(
+        var image = $("<img>").attr(
           "src",
           "https://openweathermap.org/img/w/" +
             results[i].weather[0].icon +
