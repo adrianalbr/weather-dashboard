@@ -96,13 +96,13 @@ function getCurrentForecast() {
     url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey,
     method: "GET",
   }).then(function (response) {
-    console.log(response);
-    console.log(response.dt);
+    // console.log(response);
+    // console.log(response.dt);
     $("#forecast").empty();
 
     // variable to hold response.list
     var results = response.list;
-    console.log(results);
+    // console.log(results);
 
     //declare start date to check against
     // startDate = 20
