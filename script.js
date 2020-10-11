@@ -1,9 +1,9 @@
 // store the value of the input
-let city = $("#searchTerm").val();
+var city = $("#searchTerm").val();
 // store api key
 var apiKey = "e7004d59aaee9d2c35310a5585c843a1";
 
-let date = new Date();
+var date = new Date();
 
 $("#searchTerm").keypress(function (event) {
   if (event.keyCode === 13) {
@@ -13,37 +13,37 @@ $("#searchTerm").keypress(function (event) {
 });
 
 $("#searchBtn").on("click", function () {
-  $("#forecastH5").addClass("show");
+  $("#forecast5day").addClass("show");
 
-  // get the value of the input from user
+  // get the value from user
   city = $("#searchTerm").val();
 
   // clear input box
   $("#searchTerm").val("");
 
-  // full url to call api
-  const queryUrl =
+  // call api
+  var queryUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&appid=" +
     apiKey;
 
-  console.log(queryUrl);
+  // console.log(queryUrl);
   $.ajax({
     url: queryUrl,
     method: "GET",
   }).then(function (response) {
-    console.log(response);
+    // console.log(response);
 
-    console.log(response.name);
-    console.log(response.weather[0].icon);
+    // console.log(response.name);
+    // console.log(response.weather[0].icon);
 
-    let tempF = (response.main.temp - 273.15) * 1.8 + 32;
-    console.log(Math.floor(tempF));
+    var tempF = (response.main.temp - 273.15) * 1.8 + 32;
+    // console.log(Math.floor(tempF));
 
-    console.log(response.main.humidity);
+    // console.log(response.main.humidity);
 
-    console.log(response.wind.speed);
+    // console.log(response.wind.speed);
 
     getCurrentConditions(response);
     getCurrentForecast(response);
@@ -52,13 +52,13 @@ $("#searchBtn").on("click", function () {
 });
 
 function makeList() {
-  let listItem = $("<li>").addClass("list-group-item").text(city);
+  var listItem = $("<li>").addClass("list-group-item").text(city);
   $(".list").append(listItem);
 }
 
 function getCurrentConditions(response) {
-  // get the temperature and convert to fahrenheit
-  let tempF = (response.main.temp - 273.15) * 1.8 + 32;
+  // get the temperature and convert to fahrenheit >> is there a better way?
+  var tempF = (response.main.temp - 273.15) * 1.8 + 32;
   tempF = Math.floor(tempF);
 
   $("#currentCity").empty();
@@ -84,7 +84,7 @@ function getCurrentConditions(response) {
     "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png"
   );
 
-  // add to page
+  // append
   city.append(cityDate, image);
   cardBody.append(city, temperature, humidity, wind);
   card.append(cardBody);
@@ -101,7 +101,7 @@ function getCurrentForecast() {
     $("#forecast").empty();
 
     // variable to hold response.list
-    let results = response.list;
+    var results = response.list;
     console.log(results);
 
     //declare start date to check against
@@ -109,15 +109,15 @@ function getCurrentForecast() {
     //have end date, endDate = startDate + 5
 
     for (let i = 0; i < results.length; i++) {
-      let day = Number(results[i].dt_txt.split("-")[2].split(" ")[0]);
-      let hour = results[i].dt_txt.split("-")[2].split(" ")[1];
-      console.log(day);
-      console.log(hour);
+      var day = Number(results[i].dt_txt.split("-")[2].split(" ")[0]);
+      var hour = results[i].dt_txt.split("-")[2].split(" ")[1];
+      // console.log(day);
+      // console.log(hour);
 
       if (results[i].dt_txt.indexOf("12:00:00") !== -1) {
         // get the temperature and convert to fahrenheit
-        let temp = (results[i].main.temp - 273.15) * 1.8 + 32;
-        let tempF = Math.floor(temp);
+        var temp = (results[i].main.temp - 273.15) * 1.8 + 32;
+        var tempF = Math.floor(temp);
 
         var card = $("<div>").addClass(
           "card col-md-2 ml-4 bg-primary text-white"
