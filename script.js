@@ -5,6 +5,18 @@ var apiKey = "e7004d59aaee9d2c35310a5585c843a1";
 
 var date = new Date();
 
+var historyArr = JSON.parse(localStorage.getItem("history")) || [];
+
+if(historyArr.length > 0){
+  //call function that gets current weather
+  getCurrentForecast
+  //historyArr[historyArr.length-1]
+}
+
+for (let i = 0; i < historyArr.length; i++) {
+  makeList(historyArr[i]);
+}
+
 $("#searchTerm").keypress(function (event) {
   if (event.keyCode === 13) {
     event.preventDefault();
@@ -12,11 +24,21 @@ $("#searchTerm").keypress(function (event) {
   }
 });
 
+function saveToLocal(city) {
+  console.log(historyArr);
+  if (historyArr.indexOf(city) === -1) {
+    historyArr.push(city);
+    localStorage.setItem("history", JSON.stringify(historyArr));
+  }
+}
+
 $("#searchBtn").on("click", function () {
   $("#forecast5day").addClass("show");
 
   // get the value from user
   city = $("#searchTerm").val();
+
+  saveToLocal(city);
 
   // clear input box
   $("#searchTerm").val("");
@@ -33,26 +55,17 @@ $("#searchBtn").on("click", function () {
     url: queryUrl,
     method: "GET",
   }).then(function (response) {
-    // console.log(response);
-
-    // console.log(response.name);
-    // console.log(response.weather[0].icon);
 
     var tempF = (response.main.temp - 273.15) * 1.8 + 32;
-    // console.log(Math.floor(tempF));
-
-    // console.log(response.main.humidity);
-
-    // console.log(response.wind.speed);
-
+    
     getCurrentConditions(response);
     getCurrentForecast(response);
     makeList();
   });
 });
 
-function makeList() {
-  var listItem = $("<li>").addClass("list-group-item").text(city);
+function makeList(text) {
+  var listItem = $("<li>").addClass("list-group-item").text(text);
   $(".list").append(listItem);
 }
 
@@ -93,7 +106,11 @@ function getCurrentConditions(response) {
 
 function getCurrentForecast() {
   $.ajax({
-    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey,
+    url:
+      "https://api.openweathermap.org/data/2.5/forecast?q=" +
+      city +
+      "&appid=" +
+      apiKey,
     method: "GET",
   }).then(function (response) {
     // console.log(response);
@@ -147,3 +164,13 @@ function getCurrentForecast() {
     }
   });
 }
+
+//be able to store each city
+//local arr for each city
+//strigify the arr then store in local storage
+
+//do not want to save the same city more then once
+
+//grab from local stroage
+//parse the arr
+//store it in a localvar

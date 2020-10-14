@@ -1,13 +1,15 @@
-
 .hide {
-    display: none;
+  display: none;
 }
 
 .show {
-    display: block;
+  display: block;
 }
 
-#forecast{
+#forecast {
+  float: right;
+}
 
-    float: right;
+#forecastParent {
+  float: right;
 }
