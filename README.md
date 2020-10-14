@@ -28,9 +28,17 @@ The application can be found here - https://adrianalbr.github.io/weather-dashboa
 
 ## How it works
 
+The user is presented with a form to enter the city and a submit button
 
+![weather-dashboard](images/weather-start.jpeg)
 
-![weather-dashboard]()
+The user submits a city and the day forecast and five day forecast is presented, and the city is added to the history list
+
+![weather-dashboard](images/weather-start.jpeg)
+
+If the user wants to search for another city they can enter it in the search, and the new forecast will be displayed and the new city will be added to the history list
+
+![weather-dashboard](images/weather-start.jpeg)
 
 
 
