@@ -7,15 +7,7 @@ var date = new Date();
 // local storage
 var historyArr = JSON.parse(localStorage.getItem("history")) || [];
 
-if(historyArr.length > 0){
-  //call function that gets current weather
-  getCurrentForecast
-  makeList
-  //historyArr[historyArr.length-1]
-}
-
-for (let i = 0; i < historyArr.length; i++) {
-  makeList(historyArr[i]);
+if (historyArr.length > 0) {
 }
 
 $("#searchTerm").keypress(function (event) {
@@ -39,7 +31,8 @@ $("#searchBtn").on("click", function () {
   // get the value from user
   city = $("#searchTerm").val();
 
-  saveToLocal(city);
+  historyArr.push(city);
+  localStorage.setItem("history", JSON.stringify(historyArr));
 
   // clear input box
   $("#searchTerm").val("");
@@ -56,19 +49,49 @@ $("#searchBtn").on("click", function () {
     url: queryUrl,
     method: "GET",
   }).then(function (response) {
-
     var tempF = (response.main.temp - 273.15) * 1.8 + 32;
-    
+
     getCurrentConditions(response);
     getCurrentForecast(response);
     makeList();
   });
 });
 
-function makeList(text) {
-  var listItem = $("<li>").addClass("list-group-item").text(text);
-  $(".list").append(listItem);
+//create list for history cities
+function makeList() {
+  $(".list").empty();
+  for (let i = 0; i < historyArr.length; i++) {
+    var listItem = $("<li>").addClass("list-group-item").text(historyArr[i]);
+    $(".list").append(listItem);
+  }
 }
+//call function to clear page
+makeList();
+
+$(".list").on("click", ".list-group-item", function () {
+  $("#forecast5day").addClass("show");
+
+  // get the value from user
+  city = $(this).text();
+
+  // call api
+  var queryUrl =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    city +
+    "&appid=" +
+    apiKey;
+
+  // console.log(queryUrl);
+  $.ajax({
+    url: queryUrl,
+    method: "GET",
+  }).then(function (response) {
+    var tempF = (response.main.temp - 273.15) * 1.8 + 32;
+
+    getCurrentConditions(response);
+    getCurrentForecast(response);
+  });
+});
 
 function getCurrentConditions(response) {
   // get the temperature and convert to fahrenheit >> is there a better way?
@@ -114,7 +137,6 @@ function getCurrentForecast() {
       apiKey,
     method: "GET",
   }).then(function (response) {
-  
     $("#forecast").empty();
 
     // variable to hold response.list
@@ -123,7 +145,6 @@ function getCurrentForecast() {
     for (let i = 0; i < results.length; i++) {
       var day = Number(results[i].dt_txt.split("-")[2].split(" ")[0]);
       var hour = results[i].dt_txt.split("-")[2].split(" ")[1];
-     
 
       if (results[i].dt_txt.indexOf("12:00:00") !== -1) {
         // get the temperature and convert to fahrenheit
@@ -158,13 +179,3 @@ function getCurrentForecast() {
     }
   });
 }
-
-//be able to store each city
-//local arr for each city
-//strigify the arr then store in local storage
-
-//do not want to save the same city more then once
-
-//grab from local stroage
-//parse the arr
-//store it in a localvar
