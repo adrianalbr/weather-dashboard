@@ -17,6 +17,7 @@ $("#searchTerm").keypress(function (event) {
   }
 });
 
+//saving to Local storage
 function saveToLocal(city) {
   console.log(historyArr);
   if (historyArr.indexOf(city) === -1) {
