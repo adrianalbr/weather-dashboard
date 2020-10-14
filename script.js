@@ -4,12 +4,13 @@ var city = $("#searchTerm").val();
 var apiKey = "e7004d59aaee9d2c35310a5585c843a1";
 
 var date = new Date();
-
+// local storage
 var historyArr = JSON.parse(localStorage.getItem("history")) || [];
 
 if(historyArr.length > 0){
   //call function that gets current weather
   getCurrentForecast
+  makeList
   //historyArr[historyArr.length-1]
 }
 
@@ -113,23 +114,16 @@ function getCurrentForecast() {
       apiKey,
     method: "GET",
   }).then(function (response) {
-    // console.log(response);
-    // console.log(response.dt);
+  
     $("#forecast").empty();
 
     // variable to hold response.list
     var results = response.list;
-    // console.log(results);
-
-    //declare start date to check against
-    // startDate = 20
-    //have end date, endDate = startDate + 5
 
     for (let i = 0; i < results.length; i++) {
       var day = Number(results[i].dt_txt.split("-")[2].split(" ")[0]);
       var hour = results[i].dt_txt.split("-")[2].split(" ")[1];
-      // console.log(day);
-      // console.log(hour);
+     
 
       if (results[i].dt_txt.indexOf("12:00:00") !== -1) {
         // get the temperature and convert to fahrenheit
